@@ -41,35 +41,6 @@ $(document).ready(function() {
             }
         });
 
-        // For transcriptions marked with class 'blend',
-        // replace the sentence content with the transcription
-        $('.transcriptionContainer.blend').each(function() {
-            var container = $(this);
-            var transcr = container.find('.transcription');
-            var sentence = container.closest('.sentence').find('.content .text');
-            if (sentence.data('text') === undefined) {
-                sentence.data('text', sentence.text());
-            }
-            sentence.html(transcr.html());
-            container.toggle(false);
-
-            var isMainSentence = container.closest('.translations').length == 0;
-            if (isMainSentence) {
-                // Allow to unblend back the transcription and the sentence
-                // by clicking on the transcribe button
-                var menu = container.closest('.sentences_set').find('.transcribe-buttons');
-                var button = container.find('.transcribe.option');
-                button.click(function(event) {
-                    sentence.text(sentence.data('text'));
-                    button.remove();
-                    container.toggle(true);
-                });
-                button.toggle(true);
-                menu.empty().append(button);
-            }
-            container.removeClass('blend');
-        });
-
         function escapeUnicodeChar(c) {
             var code = c.charCodeAt(0);
             if (code >= 128) {
